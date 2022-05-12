@@ -1,0 +1,46 @@
+{
+    "manifest_version": 2,
+    "name": "WEB-PCI-LVDS",
+    "version": "1.0.0",
+    "description": "前端可视化平台(谷歌集成)",
+    "icons": {
+        "16": "img/icon.png",
+        "48": "img/icon.png",
+        "128": "img/icon.png"
+    },
+    "background": {
+        "page": "background/index.html"
+    },
+    "browser_action": {
+        "default_icon": "img/icon.png",
+        "default_title": "前端可视化平台(谷歌集成)",
+        "default_popup": "popupHtml/dist/index.html"
+    },
+    "permissions": [
+        "contextMenus",
+        "tabs",
+        "notifications",
+        "webRequest",
+        "webRequestBlocking",
+        "storage",
+        "http://*/*",
+        "https://*/*"
+    ],
+    "homepage_url": "https://docs.996day.com",
+    "options_page": "options.html",
+    "options_ui": {
+        "page": "/cardConfig/index.html",
+        "chrome_style": true
+    },
+    "omnibox": { "keyword": "go" },
+    "web_accessible_resources": ["pageConfig/inject/index.js"],
+    "default_locale": "zh_CN",
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": ["pageConfig/js/index.js", "pageConfig/inject/index.js"],
+        "css": ["pageConfig/css/index.css"],
+        "run_at": "document_start"
+    }],
+    "devtools_page": "devtools.html",
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
