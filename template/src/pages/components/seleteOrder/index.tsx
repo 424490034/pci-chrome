@@ -63,7 +63,10 @@ export default function index(props: any) {
         .then((dataStr: any) => {
           try {
             console.log(dataStr);
-
+            if (dataStr.type === '5') {
+              setList(initlist);
+              return;
+            }
             let data = parseStr(dataStr);
             let list = Object.keys(data).map((item: string) => {
               return {
