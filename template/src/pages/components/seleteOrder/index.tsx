@@ -4,11 +4,11 @@
 import React, { useEffect, useState } from 'react';
 import styles from './index.less';
 import classNames from 'classnames';
-import { detailUrl, openUrl } from '../../config/host';
+import { CustomRunUrl, detailUrl, openUrl } from '../../config/host';
 import request from '../../../utils/request';
 import { Tag, Tooltip } from 'antd';
 import { YoutubeOutlined } from '@ant-design/icons';
-let initlist = [
+let initList = [
   {
     label: '指令运行',
     value: 'start',
@@ -64,7 +64,7 @@ export default function index(props: any) {
           try {
             console.log(dataStr);
             if (dataStr.type === '5') {
-              setList(initlist);
+              setList(initList);
               return;
             }
             let data = parseStr(dataStr);
@@ -83,7 +83,7 @@ export default function index(props: any) {
           setList(errList);
         });
     } else {
-      setList(initlist);
+      setList(initList);
     }
     setOpenKey('');
   }
@@ -102,6 +102,14 @@ export default function index(props: any) {
         setOpenKey('');
       });
   }
+
+  function openCustomOrder(projectId: string, order: string) {
+    request(CustomRunUrl, {
+      projectId,
+      order,
+    });
+  }
+
   return (
     <div
       className={classNames(
@@ -109,6 +117,23 @@ export default function index(props: any) {
         seleteKey && styles.selete_show_div,
       )}
     >
+      {seleteData?.customCmdOrders?.orders?.length &&
+        seleteData?.customCmdOrders?.orders?.map((item: any, index: number) => {
+          return (
+            <Tooltip key={index} title={item.name || item.order}>
+              <Tag
+                icon={<YoutubeOutlined />}
+                color="#00965e"
+                className={styles.tag_span}
+                onClick={() => {
+                  openCustomOrder(seleteData.id, item.order);
+                }}
+              >
+                {item.name}
+              </Tag>
+            </Tooltip>
+          );
+        })}
       {Array.isArray(list) &&
         list.length > 0 &&
         list.map((item: any, index: number) => {
