@@ -1,5 +1,6 @@
 {
     "private": true,
+    "packageManager": "yarn@3.2.0",
     "version": "1.0.0",
     "scripts": {
         "start": "umi dev",
